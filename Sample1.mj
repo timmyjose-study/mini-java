@@ -1,0 +1,14 @@
+{
+  int A;
+  A = 5;
+
+  while (A == 5) {
+    int B;
+    B = 6;
+    A = (B + A);
+    println A;
+  } ;
+
+  boolean C;
+  println C;
+}
