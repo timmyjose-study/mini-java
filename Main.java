@@ -7,10 +7,8 @@ public class Main {
       System.exit(1);
     }
 
-    Lexer lexer = new Lexer(args[0]);
-    lexer.scan();
-    while (lexer.hasMoreTokens()) {
-      System.out.println(lexer.nextToken());
-    }
+    Parser parser = new Parser(args[0]);
+    ProgramAST program = parser.parse();
+    System.out.println(program);
   }
 }

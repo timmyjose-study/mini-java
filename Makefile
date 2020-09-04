@@ -1,8 +1,8 @@
 JAVACC := javac
 JAVAFLAGS := -Xlint
-CLASSES := ProgramTree.java StatementListTree.java StatementTree.java ExpressionTree.java Identifier.java DataTypeTree.java \
-					 Operator.java TokenType.java Token.java Lexer.java LexerException.java ScannerException.java \
-					 Main.java
+CLASSES := ProgramAST.java StatementListAST.java StatementAST.java ExpressionAST.java Identifier.java DataTypeAST.java \
+					 Operator.java TokenType.java Token.java Lexer.java LexerException.java ScannerException.java ParserException.java \
+					 Parser.java Main.java
 
 .PHONY: clean run default
 .SUFFIXES: .java .class
