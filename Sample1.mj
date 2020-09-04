@@ -7,7 +7,7 @@
     B = 6;
     A = (B + A);
     println A;
-  } ;
+  };
 
   boolean C;
   println C;

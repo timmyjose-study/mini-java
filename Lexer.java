@@ -10,19 +10,20 @@ public class Lexer {
 
   private Char currentChar;
   private StringBuffer currentSpelling;
+  private int currentLine;
+  private int currentColumn;
 
   public Lexer(String filename) {
     this.scanner = new Scanner(filename);
     this.tokens = new ArrayList<>();
-    this.idx = 0;
     this.currentChar = scanner.nextCharacter();
+    this.scan();
+    System.out.println(tokens);
+    this.idx = 0;
   }
 
   private void skipIt() {
-    if (!scanner.hasMoreCharacters())
-      throw new LexerException("Expected more characters, found none.");
-
-    currentChar = scanner.nextCharacter();
+    if (scanner.hasMoreCharacters()) currentChar = scanner.nextCharacter();
   }
 
   private void skip(char c) {
@@ -34,12 +35,12 @@ public class Lexer {
             currentChar.column));
     }
 
-    currentChar = scanner.nextCharacter();
+    if (scanner.hasMoreCharacters()) currentChar = scanner.nextCharacter();
   }
 
   private void acceptIt() {
     currentSpelling.append(currentChar.c);
-    currentChar = scanner.nextCharacter();
+    if (scanner.hasMoreCharacters()) currentChar = scanner.nextCharacter();
   }
 
   private void accept(char c) {
@@ -52,18 +53,26 @@ public class Lexer {
     }
 
     currentSpelling.append(c);
-    currentChar = scanner.nextCharacter();
+    if (scanner.hasMoreCharacters()) currentChar = scanner.nextCharacter();
   }
 
-  public List<Token> scan() {
+  public void scan() {
     while (scanner.hasMoreCharacters()) {
       scanWhitespace();
       currentSpelling = new StringBuffer();
       TokenType tt = scanToken();
-      tokens.add(new Token(tt, currentSpelling.toString()));
+      tokens.add(new Token(tt, currentSpelling.toString(), currentLine, currentColumn));
     }
 
-    return tokens;
+    // for eot
+    TokenType tt = scanToken();
+    if (tt != TokenType.EOT) {
+      throw new LexerException(MessageFormat.format("Expected eot, found {0} at line {1}, column {2}",
+            currentChar.c,
+            currentChar.line,
+            currentChar.column));
+    }
+    tokens.add(new Token(TokenType.EOT, "<eot>", -1, -1));
   }
 
   private void scanWhitespace() {
@@ -77,6 +86,9 @@ public class Lexer {
   }
 
   private TokenType scanToken() {
+    currentLine = currentChar.line;
+    currentColumn = currentChar.column;
+
     switch (currentChar.c) {
       case '0':
       case '1':
@@ -162,8 +174,9 @@ public class Lexer {
                 acceptIt();
                 if (currentChar.c == '=') {
                   acceptIt();
+                  return TokenType.OPERATOR;
                 }
-                return TokenType.OPERATOR;
+               return TokenType.BECOMES;
 
       case '\u0000': skipIt(); return TokenType.EOT;
 

@@ -1,12 +1,9 @@
 // Statement_List ::= Statement ; Statement_List | epsilon
-abstract class StatementListAST {
-}
-
-class StatementListAST1 extends StatementListAST {
+class StatementListAST {
  private StatementAST stmt;
  private StatementListAST rest;
 
- public StatementListAST1(StatementAST stmt, StatementListAST rest) {
+ public StatementListAST(StatementAST stmt, StatementListAST rest) {
    this.stmt = stmt;
    this.rest = rest;
  }
@@ -21,15 +18,6 @@ class StatementListAST1 extends StatementListAST {
 
  @Override
  public String toString() {
-   return "StatementListAST1 { stmt = " + this.stmt + ", rest = " + this.rest + " }";
+   return "StatementListAST { rest = " + this.rest + ", stmt = " + this.stmt + " }";
  }
-}
-
-class StatementListAST2 extends StatementListAST {
-  public StatementListAST2() {}
-
-  @Override
-  public String toString() {
-    return "StatementListAST2 {}";
-  }
 }

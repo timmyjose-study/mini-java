@@ -1,4 +1,5 @@
 public enum TokenType {
+  BECOMES("<becomes>"),
   EOT("<eot>"),
   IDENTIFIER("<identifier>"),
   LEFT_BRACE("<left-brace>"),

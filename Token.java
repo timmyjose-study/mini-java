@@ -2,12 +2,16 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Token {
-  private TokenType kind;
-  private String spelling;
+  TokenType kind;
+  String spelling;
+  int line;
+  int column;
   private static final Map<String, TokenType> keywords;
 
   static {
     keywords = new HashMap<>();
+    
+    keywords.put("=", TokenType.BECOMES);
     keywords.put(";", TokenType.SEMICOLON);
     keywords.put("println", TokenType.PRINTLN);
     keywords.put("while", TokenType.WHILE);
@@ -17,21 +21,15 @@ public class Token {
     keywords.put(")", TokenType.RIGHT_PAREN);
   }
 
-  public Token(TokenType kind, String spelling) {
+  public Token(TokenType kind, String spelling, int line, int column) {
     this.kind = kind;
 
     if (keywords.containsKey(spelling)) {
       this.kind = keywords.get(spelling);
     }
     this.spelling = spelling;
-  }
-
-  public TokenType kind() {
-    return this.kind;
-  }
-
-  public String spelling() {
-    return this.spelling();
+    this.line = line;
+    this.column = column;
   }
 
   @Override

@@ -1,11 +1,12 @@
 class Identifier {
-  private String spelling;
+  String spelling;
 
   public Identifier(String spelling) {
     this.spelling = spelling;
   }
 
-  public String spelling() {
-    return this.spelling;
+  @Override
+  public String toString() {
+    return "Identifier { spelling = " + this.spelling + " }";
   }
 }

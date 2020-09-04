@@ -22,7 +22,7 @@ public class Scanner {
 
       List<String> lines = Files.readAllLines(Paths.get(filename));
       for (String s : lines) {
-        line++;
+        ++line;
         for (char c : s.toCharArray()) {
           this.characters.add(new Char(c, line, ++column));
         }
